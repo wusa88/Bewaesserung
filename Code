@@ -1,0 +1,103 @@
+#!/usr/bin/python3
+
+from tkinter import *
+from time import *
+
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(3,GPIO.OUT)
+GPIO.setwarnings(False)
+root=Tk()
+root.geometry("450x140+100+100")
+root.title("Haupemenue")
+
+
+led_status = "aus"
+scale_vorhanden = "nein"
+scale_wert = 0
+
+def led_automatisch():
+    wert = 0
+    print(wert)
+    global scale_wert
+    while wert <= scale_wert:
+       GPIO.output(3,True)
+       wert = wert +1
+       sleep(1)
+       print(wert)
+    else:
+       GPIO.output(3,False)
+
+
+
+def led():
+    def update():
+        test = "a"
+        l = Label(funksteckdosen, text = test)
+        l.pack()
+
+    def led_toggle():
+        global led_status
+        if led_status == "aus":
+           GPIO.output(3,True)
+           led_status = "an"
+           btn_led.config(bg = "green",text = "Bewaesserung\n laeuft")
+        else:
+           GPIO.output(3,False)
+           led_status = "aus"
+           btn_led.config(bg = "red", text = "Bewaesserung\n kann\n gestartet\n werden")
+
+    def scale():
+        def scale_value():
+            wert = 0
+            global scale_wert
+            scale_wert = scale1.get()
+            led_automatisch()
+        global scale_vorhanden
+        if scale_vorhanden == "nein":
+            scale1 = Scale(led, from_=0, to=200, orient=HORIZONTAL)
+            scale1.pack()
+            scale_vorhanden = "ja"
+            Button(led, text="Setzen", command=scale_value).pack()
+
+
+
+    led=Toplevel()
+    led.title("Bewaesserung")
+    led.geometry("500x170+100+100")
+    lbl_led = Label(led, text="LED AN AUS")
+    btn_exit = Button(led, text="Hauptmenue", fg="red",  command=led.destroy)
+    btn_exit.place(x=400, y=140, height=30, width=100)
+#    btn_funksteckdose_tv = Button(funksteckdosen, text="TV", command=update)
+ #   btn_funksteckdose_tv.place(x=10, y=10, height=100, width=100)
+  #  btn_funksteckdose_balkon = Button(funksteckdosen, bg="blue",  text="Balkon")
+#    btn_funksteckdose_balkon.place(x=120, y=10, height=100, width=100)
+ #   btn_funksteckdose_verstaerker = Button(funksteckdosen, text="Verstaerker")
+  #  btn_funksteckdose_verstaerker.place(x=230, y=10, height=100, width=100)
+   # btn_alle_funksteckdosen = Button(funksteckdosen, text="alle \n Funksteck-\ndosen")
+#    btn_alle_funksteckdosen.place(x=340, y=10, height=100, width=100)
+    btn_led = Button(led, text="LED Toggle",command=led_toggle)
+    btn_led.place(x=340, y=20, height=100, width=100)
+    #show_scale = Scale(led, from_=0, to=200, orient=HORIZONTAL)
+    #show_scale.place(x=120, y=10)
+    scale()
+
+
+def hauptmenue():
+    btn_LED = Button(root, text="LED", command=led)
+    btn_LED.place(x=10, y=20, height=100, width=100)
+
+    btn_exit = Button(root, text="Beenden", command=root.destroy)
+    btn_exit.place(x=340, y=20, height=100, width=100)
+
+#    showscale = Button(root, text="Skala", command=scale)
+#    showscale.place(x=380, y=20, height=100, width=100)
+
+def main():
+    hauptmenue()
+    root.mainloop()
+
+if __name__ == '__main__':
+        main()
+
+
