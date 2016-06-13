@@ -15,27 +15,10 @@ root.title("Haupemenue")
 led_status = "aus"
 scale_vorhanden = "nein"
 scale_wert = 0
-
-def led_automatisch():
-    wert = 0
-    print(wert)
-    global scale_wert
-    while wert <= scale_wert:
-       GPIO.output(3,True)
-       wert = wert +1
-       sleep(1)
-       print(wert)
-    else:
-       GPIO.output(3,False)
-
-
+bewaesserung = "True"
 
 def led():
-    def update():
-        test = "a"
-        l = Label(funksteckdosen, text = test)
-        l.pack()
-
+    
     def led_toggle():
         global led_status
         if led_status == "aus":
@@ -55,12 +38,10 @@ def led():
             led_automatisch()
         global scale_vorhanden
         if scale_vorhanden == "nein":
-            scale1 = Scale(led, from_=0, to=200, orient=HORIZONTAL)
-            scale1.pack()
+            scale1 = Scale(led, from_=0, to=200, length = 200, orient=HORIZONTAL)
+            scale1.place(x=340, y=20)
             scale_vorhanden = "ja"
-            Button(led, text="Setzen", command=scale_value).pack()
-
-
+            Button(led, text="Setzen", command=scale_value).place(x=340, y=50)
 
     led=Toplevel()
     led.title("Bewaesserung")
@@ -81,6 +62,18 @@ def led():
     #show_scale = Scale(led, from_=0, to=200, orient=HORIZONTAL)
     #show_scale.place(x=120, y=10)
     scale()
+    
+def led_automatisch():
+    wert = 0
+    print(wert)
+    global scale_wert
+    while wert <= scale_wert:
+       GPIO.output(3,True)
+       wert = wert +1
+       sleep(1)
+       print(wert)
+    else:
+       GPIO.output(3,False)
 
 
 def hauptmenue():
