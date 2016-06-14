@@ -26,7 +26,7 @@ def hauptmenue():       #Hauptmenuebuttons erstellen und anordnen
     btn_exit.place(x=340, y=20, height=100, width=100)
     
 
-def led():          #Button erstellen
+def led():          #Button und neues Fenster erstellen
     led=Toplevel()
     led.title("Bewaesserung")
     led.geometry("500x170+100+100")
