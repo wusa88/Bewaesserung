@@ -53,14 +53,14 @@ def led():
     btn_led.place(x=340, y=20, height=100, width=100)
     scale()
     
-def led_automatisch():          #Scale Wert abfragen und hochzaehlen
+def led_automatisch():          #Scale Wert aus globaler variable einlesen, mit wert vergleichen und hochzaehlen
     wert = 0
     print(wert)
     global scale_wert
     while wert <= scale_wert:
        GPIO.output(3,True)
        wert = wert +1
-       sleep(1)
+       root.after(1000,led_automatisch)
        print(wert)
     else:
        GPIO.output(3,False)
