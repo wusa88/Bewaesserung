@@ -60,7 +60,7 @@ def led_automatisch():          #Scale Wert aus globaler variable einlesen, mit 
     while wert <= scale_wert:
        GPIO.output(3,True)
        wert = wert +1
-       root.after(1000,led_automatisch)
+       warten_led.after(1000,led_automatisch)
        print(wert)
     else:
        GPIO.output(3,False)
