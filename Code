@@ -17,7 +17,16 @@ scale_vorhanden = "nein"
 scale_wert = 0
 bewaesserung = "True"
 
-def led():
+
+def hauptmenue():       #Hauptmenuebuttons erstellen und anordnen
+    btn_LED = Button(root, text="LED", command=led)
+    btn_LED.place(x=10, y=20, height=100, width=100)
+
+    btn_exit = Button(root, text="Beenden", command=root.destroy)
+    btn_exit.place(x=340, y=20, height=100, width=100)
+    
+
+def led():          #Button erstellen
     led=Toplevel()
     led.title("Bewaesserung")
     led.geometry("500x170+100+100")
@@ -67,13 +76,6 @@ def led_automatisch():          #Scale Wert aus globaler variable einlesen, mit 
     else:
        GPIO.output(3,False)
 
-
-def hauptmenue():       #Hauptmenuebuttons erstellen und anordnen
-    btn_LED = Button(root, text="LED", command=led)
-    btn_LED.place(x=10, y=20, height=100, width=100)
-
-    btn_exit = Button(root, text="Beenden", command=root.destroy)
-    btn_exit.place(x=340, y=20, height=100, width=100)
 
 def main():         #starte hauptmenue und loop 
     hauptmenue()
